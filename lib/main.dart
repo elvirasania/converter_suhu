@@ -30,17 +30,28 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController etInput = TextEditingController();
 
+  String selected = '';
+  List riwayat = [];
+  double hasil = 0;
   double inputUser = 0;
   double kelvin = 0;
-  double reamor = 0;
-  double farentheit = 0;
+  double reamur = 0;
+  double fahrenheit = 0;
 
   test() {
     setState(() {
       inputUser = (etInput.text == '') ? 0 : double.parse(etInput.text);
       kelvin = inputUser + 273;
-      reamor = (4 / 5) * inputUser;
-      farentheit = (9 / 5) * inputUser + 32;
+      reamur = (4 / 5) * inputUser;
+      fahrenheit = (9 / 5) * inputUser + 32;
+      if (selected == 'Kelvin') {
+        hasil = inputUser + 273;
+      } else if (selected == 'Reamur') {
+        hasil = (4 / 5) * inputUser + 32;
+      } else if (selected == 'Fahrenheit') {
+        hasil = (9 / 5) * inputUser + 32;
+      }
+      riwayat.add('$selected : $hasil');
     });
   }
 
@@ -61,8 +72,30 @@ class _MyHomePageState extends State<MyHomePage> {
                     const InputDecoration(hintText: "Masukkan Nilai Suhu"),
               ),
             ),
+            Container(
+              padding: const EdgeInsets.all(10.0),
+              child: DropdownButtonFormField(
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    filled: false,
+                    hintText: 'Pilih',
+                    hintStyle: TextStyle(
+                      fontFamily: 'Montserrat-Regular',
+                      fontSize: 14,
+                    )),
+                items: ['Kelvin', 'Reamur', 'Fahrentheit'].map((String value) {
+                  return DropdownMenuItem(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? value) {
+                  selected = value!;
+                },
+              ),
+            ),
             const SizedBox(
-              height: 100,
+              height: 10,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,10 +132,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(10.0),
-                        child: const Text('Reamor'),
+                        child: const Text('Reamur'),
                       ),
                       Container(
-                        child: Text('$reamor'),
+                        child: Text('$reamur'),
                       )
                     ],
                   ),
@@ -119,10 +152,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(10.0),
-                        child: const Text('Farenheit'),
+                        child: const Text('Fahrentheit'),
                       ),
                       Container(
-                        child: Text('$farentheit'),
+                        child: Text('$fahrenheit'),
                       )
                     ],
                   ),
@@ -130,8 +163,19 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             const SizedBox(
-              height: 50,
+              height: 30,
             ),
+            Container(
+                width: double.infinity,
+                color: Colors.transparent,
+                height: 60,
+                padding: const EdgeInsets.all(10.0),
+                child: Center(
+                    child: Text(
+                  'Hasil : \n $hasil',
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.bold),
+                ))),
             InkWell(
               onTap: () {
                 test();
@@ -142,6 +186,25 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 60,
                   padding: const EdgeInsets.all(10.0),
                   child: const Center(child: Text('Konversi'))),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10.0),
+              child: const Text(
+                'Riwayat Konversi',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: riwayat.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    title: Text('${riwayat[index]}'),
+                  ),
+                );
+              },
             )
           ],
         ),

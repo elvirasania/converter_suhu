@@ -1,6 +1,12 @@
 # converter_suhu
 
-A new Flutter project.
+PRAKTIKUM 3 DAN 4 MENGENAI CONVERTER SUHU <br>
+NAMA : ELVIRA SANIA MUFIDA <br>
+KELAS : TI-3G <br>
+NO ABSEN : 09 <br>
+BERIKUT MERUPAKAN HASIL SCREENSHOT PADA RIWAYAT CONVERTER SUHU <br>
+<image src="./images/Screenshot_3.png">
+<image src="./images/Screenshot_1.png">
 
 ## Getting Started
 
